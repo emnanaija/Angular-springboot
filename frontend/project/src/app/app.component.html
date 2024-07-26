@@ -1,4 +1,9 @@
 <div class="container">
-  <h1 class="mt-3 mb-3">person</h1>
-  <app-person-list></app-person-list>
+  <h1>Person Management</h1>
+  
+  <!-- Add/Edit Person Component -->
+  <app-person-add [personToEdit]="personToEdit" (personAdded)="onPersonAdded($event)"></app-person-add>
+  
+  <!-- Person List Component -->
+  <app-person-list (personEdit)="onPersonEdit($event)"></app-person-list>
 </div>
