@@ -1,1 +1,80 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+body {
+    background-color: #d4edda; /* Vert clair */
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #054408;
+}
+
+.card {
+    margin-top: 20px;
+    margin-bottom: 1rem; /* Espacement en bas de chaque carte */
+    background-color: #b9ddc2; /* Vert plus foncé */
+    border: none; /* Supprime la bordure de la carte pour un look plus propre */
+}
+
+.text-center h1 {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #b9ddc2; /* Vert plus foncé pour l'en-tête */
+    border-bottom: none; /* Supprime la bordure inférieure de l'en-tête */
+}
+
+.card-body {
+    background-color: #b9ddc2; /* Vert plus foncé pour le corps de la carte */
+}
+
+.card-title {
+    color: #054408; /* Vert foncé */
+    text-align: center; /* Centrer le texte */
+}
+
+/* Bouton personnalisé pour Add/Update et Edit */
+.btn-custom, .btn-edit {
+    background-color: #054408; /* Vert foncé */
+    border-color: #054408; /* Vert foncé */
+    color: white; /* Blanc pour le texte */
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.btn-custom:hover, .btn-edit:hover {
+    background-color: #046307; /* Vert un peu plus clair pour le survol */
+    border-color: #046307; /* Vert un peu plus clair pour le survol */
+}
+
+/* Bouton personnalisé pour Delete */
+.btn-delete {
+    background-color: #ff0000; /* Rouge */
+    border-color: #ff0000; /* Rouge */
+    color: white; /* Blanc pour le texte */
+}
+
+.btn-delete:hover {
+    background-color: #cc0000; /* Rouge foncé pour le survol */
+    border-color: #cc0000; /* Rouge foncé pour le survol */
+}
+
+/* Style spécifique pour les lignes du tableau */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ffffff; /* Blanc pour les lignes impaires */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Légèrement gris pour les lignes paires */
+}
+
+/* Style spécifique pour la ligne d'en-tête */
+.table-header {
+    background-color: #054408; /* Vert foncé */
+    color: white; /* Blanc pour le texte */
+}

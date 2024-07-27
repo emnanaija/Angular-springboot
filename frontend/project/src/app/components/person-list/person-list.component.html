@@ -1,22 +1,25 @@
-<h2>Person List</h2>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let person of persons">
-      <td>{{ person.id }}</td>
-      <td>{{ person.name }}</td>
-      <td>{{ person.email }}</td>
-      <td>
-        <button class="btn btn-warning btn-sm" (click)="editPerson(person)">Edit</button>
-        <button class="btn btn-danger btn-sm" (click)="deletePerson(person.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- person-list.component.html -->
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of persons">
+        <td>{{ person.name }}</td>
+        <td>{{ person.email }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editPerson(person)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-delete" (click)="deletePerson(person.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

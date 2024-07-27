@@ -1,5 +1,5 @@
-<h2 *ngIf="person.id === 0">Add Person</h2>
-<h2 *ngIf="person.id !== 0">Edit Person</h2>
+<h2 *ngIf="person.id === 0" class="card-title">Add Person</h2>
+<h2 *ngIf="person.id !== 0" class="card-title">Edit Person</h2>
 <form (ngSubmit)="onSubmit(personForm)" #personForm="ngForm">
   <div class="form-group">
     <label for="name">Name</label>
@@ -20,5 +20,5 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="personForm.invalid">{{ person.id === 0 ? 'Add' : 'Update' }}</button>
+  <button type="submit" class="btn btn-custom" [disabled]="personForm.invalid">{{ person.id === 0 ? 'Add' : 'Update' }}</button>
 </form>

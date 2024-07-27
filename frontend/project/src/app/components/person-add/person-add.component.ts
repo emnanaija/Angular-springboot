@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PersonserviceService } from '../../services/personservice.service';
 import { Person } from '../../common/person';
@@ -23,8 +23,8 @@ export class PersonAddComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['personToEdit'] && this.personToEdit) {
+  ngOnChanges(): void {
+    if (this.personToEdit) {
       this.person = { ...this.personToEdit };
     }
   }
@@ -34,7 +34,7 @@ export class PersonAddComponent implements OnInit {
       if (this.person.id === 0) {
         this.personService.createPerson(this.person).subscribe(person => {
           this.personAdded.emit(person);
-          form.resetForm();
+          form.reset();
           this.person = new Person(0, '', '');
         }, error => {
           console.log('Error occurred:', error);
@@ -42,7 +42,7 @@ export class PersonAddComponent implements OnInit {
       } else {
         this.personService.updatePerson(this.person.id, this.person).subscribe(person => {
           this.personAdded.emit(person);
-          form.resetForm();
+          form.reset();
           this.person = new Person(0, '', '');
         }, error => {
           console.log('Error occurred:', error);

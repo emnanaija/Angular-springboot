@@ -1,9 +1,23 @@
-<div class="container">
-  <h1>Person Management</h1>
-  
-  <!-- Add/Edit Person Component -->
-  <app-person-add [personToEdit]="personToEdit" (personAdded)="onPersonAdded($event)"></app-person-add>
-  
-  <!-- Person List Component -->
-  <app-person-list (personEdit)="onPersonEdit($event)"></app-person-list>
+<div class="container mt-4">
+  <div class="text-center mb-4">
+    <h1>Person Management</h1>
+  </div>
+  <div class="row align-items-start">
+    <!-- Add/Edit Person Component -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <app-person-add [personToEdit]="personToEdit" (personAdded)="onPersonAdded($event)" class="mb-4"></app-person-add>
+        </div>
+      </div>
+    </div>
+    <!-- Person List Component -->
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <app-person-list (personEdit)="onPersonEdit($event)"></app-person-list>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
