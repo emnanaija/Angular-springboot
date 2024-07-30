@@ -2,7 +2,7 @@
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
-      <tr class="table-header">
+      <tr>
         <th>Name</th>
         <th>Email</th>
         <th>Edit</th>
@@ -14,10 +14,10 @@
         <td>{{ person.name }}</td>
         <td>{{ person.email }}</td>
         <td>
-          <button class="btn btn-edit" (click)="editPerson(person)">Edit</button>
+          <button class="btn btn-warning btn-sm" (click)="editPerson(person)">Edit</button>
         </td>
         <td>
-          <button class="btn btn-delete" (click)="deletePerson(person.id)">Delete</button>
+          <button class="btn btn-danger btn-sm" (click)="deletePerson(person.id)">Delete</button>
         </td>
       </tr>
     </tbody>

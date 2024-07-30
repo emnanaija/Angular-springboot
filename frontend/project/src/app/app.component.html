@@ -1,23 +1,16 @@
+<!-- app.component.html -->
 <div class="container mt-4">
   <div class="text-center mb-4">
     <h1>Person Management</h1>
   </div>
-  <div class="row align-items-start">
+  <div class="row">
     <!-- Add/Edit Person Component -->
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <app-person-add [personToEdit]="personToEdit" (personAdded)="onPersonAdded($event)" class="mb-4"></app-person-add>
-        </div>
-      </div>
+    <div class="col-md-4 mb-4">
+      <app-person-add [personToEdit]="personToEdit" (personAdded)="onPersonAdded($event)"></app-person-add>
     </div>
     <!-- Person List Component -->
     <div class="col-md-8">
-      <div class="card">
-        <div class="card-body">
-          <app-person-list (personEdit)="onPersonEdit($event)"></app-person-list>
-        </div>
-      </div>
+      <app-person-list (personEdit)="onPersonEdit($event)"></app-person-list>
     </div>
   </div>
 </div>

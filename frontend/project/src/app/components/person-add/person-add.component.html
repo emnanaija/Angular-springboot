@@ -1,24 +1,29 @@
-<h2 *ngIf="person.id === 0" class="card-title">Add Person</h2>
-<h2 *ngIf="person.id !== 0" class="card-title">Edit Person</h2>
-<form (ngSubmit)="onSubmit(personForm)" #personForm="ngForm">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" id="name" class="form-control" required [(ngModel)]="person.name" name="name" #name="ngModel" minlength="3" pattern="^[a-zA-Z\s]+$">
-    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-      <div *ngIf="name.errors?.['required']">Name is required</div>
-      <div *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long</div>
-      <div *ngIf="name.errors?.['pattern']">Name cannot contain numbers</div>
-    </div>
-  </div>
+<!-- person-add.component.html -->
+<div class="card">
+  <div class="card-body">
+    <h2 *ngIf="person.id === 0" class="card-title">Add Person</h2>
+    <h2 *ngIf="person.id !== 0" class="card-title">Edit Person</h2>
+    <form (ngSubmit)="onSubmit(personForm)" #personForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="form-control" required [(ngModel)]="person.name" name="name" #name="ngModel" minlength="3" pattern="^[a-zA-Z\s]+$">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+          <div *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long</div>
+          <div *ngIf="name.errors?.['pattern']">Name cannot contain numbers</div>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" id="email" class="form-control" required [(ngModel)]="person.email" name="email" #email="ngModel" email>
-    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-      <div *ngIf="email.errors?.['required']">Email is required</div>
-      <div *ngIf="email.errors?.['email']">Email must be a valid email address</div>
-    </div>
-  </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" required [(ngModel)]="person.email" name="email" #email="ngModel" email>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+          <div *ngIf="email.errors?.['email']">Email must be a valid email address</div>
+        </div>
+      </div>
 
-  <button type="submit" class="btn btn-custom" [disabled]="personForm.invalid">{{ person.id === 0 ? 'Add' : 'Update' }}</button>
-</form>
+      <button type="submit" class="btn btn-primary" [disabled]="personForm.invalid">{{ person.id === 0 ? 'Add' : 'Update' }}</button>
+    </form>
+  </div>
+</div>
