@@ -73,6 +73,8 @@
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>3.0.1</version>
         </dependency>
+
+        <!-- Utiliser une seule version de jaxb-runtime -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
@@ -101,15 +103,42 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Retirer les dépendances JAXB en double -->
     </dependencies>
     <build>
         <plugins>
+            <!-- Existing plugins -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- JAXB2 Maven Plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sources>
+                        <source>${basedir}/src/main/resources/xsd</source>
+                    </sources>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <packageName>com.example.generated</packageName>
+                </configuration>
+            </plugin>
+
+
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <id>spring-milestones</id>
