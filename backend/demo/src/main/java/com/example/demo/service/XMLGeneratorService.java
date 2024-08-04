@@ -104,7 +104,7 @@ public class XMLGeneratorService {
         operation.setMontantTTC(BigInteger.valueOf(119000));
         operation.setMontantRS(BigInteger.valueOf(15000));
         operation.setMontantNetServi(BigInteger.valueOf(104000));
-        operation.setDevise(new TypeMontantDevise());
+        operation.setDevise(createTypeMontantDevise());
         operation.getTaxeAdditionnelle().addAll(createTaxeAdditionnelle());
         operationList.add(operation);
         listeOperations.getOperation().addAll(operationList);
@@ -118,6 +118,16 @@ public class XMLGeneratorService {
         taxeAdditionnelle.setValue(BigDecimal.valueOf(100.00));
         taxeAdditionnelleList.add(taxeAdditionnelle);
         return taxeAdditionnelleList;
+    }
+
+    private TypeMontantDevise createTypeMontantDevise() {
+        TypeMontantDevise devise = new TypeMontantDevise();
+        devise.setCodeDevise(TypeCodeDevise.USD);
+        devise.setTauxChange(BigDecimal.valueOf(1.1));
+        devise.setMontantRSDevise(BigDecimal.valueOf(13636.36));
+        devise.setMontantTTCDevise(BigDecimal.valueOf(108181.82));
+        devise.setMontantNetServiDevise(BigDecimal.valueOf(94545.45));
+        return devise;
     }
 
     private TypeCertificat.TotalPayement createTotalPayement() {
@@ -135,6 +145,23 @@ public class XMLGeneratorService {
         totalTaxes.getTotalTaxeAdditionnelle().addAll(totalTaxeAdditionnelleList);
         totalPayement.setTotalTaxes(totalTaxes);
         totalPayement.setTotalMontantNetServi(BigInteger.valueOf(104000));
+
+        // Add TotalDevise
+        totalPayement.setTotalDevise(createTotalDevise());
+
         return totalPayement;
+    }
+
+    private TotalMntDeviseType createTotalDevise() {
+        TotalMntDeviseType totalDevise = new TotalMntDeviseType();
+        List<TotalMntDeviseType.TotalMontantDevise> totalMontantDeviseList = new ArrayList<>();
+        TotalMntDeviseType.TotalMontantDevise totalMontantDevise = new TotalMntDeviseType.TotalMontantDevise();
+        totalMontantDevise.setCode(TypeCodeDevise.USD);
+        totalMontantDevise.setTotalMontantRS(BigDecimal.valueOf(13636.36));
+        totalMontantDevise.setTotalMontantTTC(BigDecimal.valueOf(108181.82));
+        totalMontantDevise.setTotalMontantNetServi(BigDecimal.valueOf(94545.45));
+        totalMontantDeviseList.add(totalMontantDevise);
+        totalDevise.getTotalMontantDevise().addAll(totalMontantDeviseList);
+        return totalDevise;
     }
 }
