@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="3.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
+  <!--
+
+Ce fichier a été généré par Eclipse Implementation of JAXB, v3.0.2 
+Voir https://eclipse-ee4j.github.io/jaxb-ri 
+Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+Généré le : 2024.08.04 à 10:37:16 AM GMT+01:00 
+
+  -->
+  <jaxb:bindings scd="x-schema::">
+    <jaxb:schemaBindings map="false">
+      <jaxb:package name="com.example.generated"/>
+    </jaxb:schemaBindings>
+    <jaxb:bindings scd="DeclarationsRS">
+      <jaxb:class ref="com.example.generated.DeclarationsRS"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~totalMntDeviseType">
+      <jaxb:class ref="com.example.generated.TotalMntDeviseType"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TotalMontantTaxeType">
+      <jaxb:class ref="com.example.generated.TotalMontantTaxeType"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeTaxpayer">
+      <jaxb:class ref="com.example.generated.TypeTaxpayer"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCertificat">
+      <jaxb:class ref="com.example.generated.TypeCertificat"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeMatriculeFiscal">
+      <jaxb:class ref="com.example.generated.TypeMatriculeFiscal"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeReferenceDeclaration">
+      <jaxb:class ref="com.example.generated.TypeReferenceDeclaration"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeAnnulerCertificat">
+      <jaxb:class ref="com.example.generated.TypeAnnulerCertificat"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeOperation">
+      <jaxb:class ref="com.example.generated.TypeOperation"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~taxeType">
+      <jaxb:class ref="com.example.generated.TaxeType"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeMontantDevise">
+      <jaxb:class ref="com.example.generated.TypeMontantDevise"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCIN">
+      <jaxb:class ref="com.example.generated.TypeCIN"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypePasseport">
+      <jaxb:class ref="com.example.generated.TypePasseport"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCarteSejour">
+      <jaxb:class ref="com.example.generated.TypeCarteSejour"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeAutreIdentifiant">
+      <jaxb:class ref="com.example.generated.TypeAutreIdentifiant"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeAdresseContact">
+      <jaxb:class ref="com.example.generated.TypeAdresseContact"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCodesPays">
+      <jaxb:typesafeEnumClass ref="com.example.generated.TypeCodesPays"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCodeDevise">
+      <jaxb:typesafeEnumClass ref="com.example.generated.TypeCodeDevise"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCodesOperations">
+      <jaxb:typesafeEnumClass ref="com.example.generated.TypeCodesOperations"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeActeOperation">
+      <jaxb:typesafeEnumClass ref="com.example.generated.TypeActeOperation"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~TypeCategoriePersonne">
+      <jaxb:typesafeEnumClass ref="com.example.generated.TypeCategoriePersonne"/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+</jaxb:bindings>
+

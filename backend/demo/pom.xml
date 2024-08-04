@@ -74,11 +74,11 @@
             <version>3.0.1</version>
         </dependency>
 
-        <!-- Utiliser une seule version de jaxb-runtime -->
+        <!-- JAXB Runtime -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.3</version>
+            <version>3.0.2</version>
         </dependency>
 
         <!-- Spring Boot Starter Test -->
@@ -102,12 +102,10 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Retirer les dépendances JAXB en double -->
     </dependencies>
     <build>
         <plugins>
-            <!-- Existing plugins -->
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -134,8 +132,6 @@
                     <packageName>com.example.generated</packageName>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 
