@@ -5,6 +5,16 @@ import org.springframework.stereotype.Service;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
+import org.xml.sax.SAXException;
+
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,6 +23,8 @@ import java.util.List;
 
 @Service
 public class XMLGeneratorService {
+    private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
+
 
     public String generateXML() {
         try {
@@ -25,7 +37,18 @@ public class XMLGeneratorService {
 
             StringWriter xmlWriter = new StringWriter();
             marshaller.marshal(declarationsRS, xmlWriter);
-            return xmlWriter.toString();
+
+            String xmlContent = xmlWriter.toString();
+
+            // Validate the generated XML
+            boolean isValid = validateXML(xmlContent);
+            if (!isValid) {
+                System.out.println("Generated XML is not valid against the schema.");
+                return "Generated XML is not valid against the schema.";
+            }
+
+            System.out.println("Generated XML is valid against the schema.");
+            return xmlContent;
         } catch (Exception e) {
             e.printStackTrace();
             return "Error generating XML";
@@ -94,6 +117,8 @@ public class XMLGeneratorService {
         TypeCertificat.ListeOperations listeOperations = new TypeCertificat.ListeOperations();
         List<TypeOperation> operationList = new ArrayList<>();
         TypeOperation operation = new TypeOperation();
+        operation.setIdTypeOperation(TypeCodesOperations.RS_1_000001);  // Assurez-vous de définir une valeur valide
+
         operation.setAnneeFacturation("2023");
         operation.setCNPC(BigInteger.ONE);
         operation.setPCharge(BigInteger.ONE);
@@ -164,4 +189,18 @@ public class XMLGeneratorService {
         totalDevise.getTotalMontantDevise().addAll(totalMontantDeviseList);
         return totalDevise;
     }
+
+    private boolean validateXML(String xmlContent) {
+        try {
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = factory.newSchema(new File(XSD_PATH));
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new StringReader(xmlContent)));
+            return true;
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
