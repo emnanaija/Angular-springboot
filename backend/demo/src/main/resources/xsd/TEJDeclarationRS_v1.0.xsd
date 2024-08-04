@@ -5,7 +5,7 @@
 	<xs:element name="DeclarationsRS">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Declarant" type="TypeMatriculeFiscal" >
+				<xs:element name="Declarant" type="TypeMatriculeFiscal">
 					<xs:annotation>
 						<xs:documentation>Références déclarant. Le typeIdentifiant doit être égale à "1" et le déclarant doit être identifié par un matricule fiscal</xs:documentation>
 					</xs:annotation>
