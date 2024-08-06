@@ -13,7 +13,5 @@ public class RetenuFourService {
     @Autowired
     private RetenuFourRepository repository;
 
-    public List<Retenue_four> getRecordsByTypIdent(Integer frtTypIdent) {
-        return repository.findByFrtTypIdent(frtTypIdent);
-    }
+
 }

@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.RetenuFourRepository;
+import com.example.demo.entity.Retenue_four;
 import com.example.generated.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.xml.bind.JAXBContext;
@@ -20,48 +23,87 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class XMLGeneratorService {
+
+    @Autowired
+    private RetenuFourRepository retenuFourRepository;
+
     private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
 
-
-    public String generateXML() {
+    public String generateXML(Long frtMatcin, String frtClepat, Integer frtMois, Integer frtAnnee) {
         try {
-            DeclarationsRS declarationsRS = new DeclarationsRS();
-            fillDeclarationsRS(declarationsRS);
+            Optional<Retenue_four> retenueFourOptional = retenuFourRepository.findByFrtMatcinAndFrtClepatAndFrtMoisAndFrtAnnee(frtMatcin, frtClepat, frtMois, frtAnnee);
+            if (retenueFourOptional.isPresent()) {
+                Retenue_four retenueFour = retenueFourOptional.get();
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(DeclarationsRS.class);
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                DeclarationsRS declarationsRS = new DeclarationsRS();
+                fillDeclarationsRS(declarationsRS, retenueFour);
 
-            StringWriter xmlWriter = new StringWriter();
-            marshaller.marshal(declarationsRS, xmlWriter);
+                JAXBContext jaxbContext = JAXBContext.newInstance(DeclarationsRS.class);
+                Marshaller marshaller = jaxbContext.createMarshaller();
+                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            String xmlContent = xmlWriter.toString();
+                StringWriter xmlWriter = new StringWriter();
+                marshaller.marshal(declarationsRS, xmlWriter);
 
-            // Validate the generated XML
-            boolean isValid = validateXML(xmlContent);
-            if (!isValid) {
-                System.out.println("Generated XML is not valid against the schema.");
-                return "Generated XML is not valid against the schema.";
+                String xmlContent = xmlWriter.toString();
+
+                // Validate the generated XML
+                boolean isValid = validateXML(xmlContent);
+                if (!isValid) {
+                    return "Generated XML is not valid against the schema.";
+                }
+
+                return "Generated XML is valid against the schema.\n" + xmlContent;
+            } else {
+                return "Matricule not found";
             }
-
-            System.out.println("Generated XML is valid against the schema.");
-            return xmlContent;
         } catch (Exception e) {
             e.printStackTrace();
             return "Error generating XML";
         }
     }
 
-    private void fillDeclarationsRS(DeclarationsRS declarationsRS) {
+    private void fillDeclarationsRS(DeclarationsRS declarationsRS, Retenue_four retenueFour) {
         declarationsRS.setVersionSchema("1.0");
 
+        // Création d'une instance de TypeMatriculeFiscal
         TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
-        declarant.setTypeIdentifiant("1");
-        declarant.setIdentifiant("1234567A");
-        declarant.setCategorieContribuable(TypeCategoriePersonne.PM);
+
+        // Définir le type d'identifiant
+        declarant.setTypeIdentifiant(String.valueOf(retenueFour.getFrtTypIdent()));
+
+        // Récupérer frtMatcin en tant que Long
+        Long frtMatcinLong = retenueFour.getFrtMatcin();
+
+        // Ajouter des zéros au début pour s'assurer qu'il a toujours 7 chiffres
+        String frtMatcinFormatted = String.format("%07d", frtMatcinLong);
+
+        // Vérifier que frtClepat est une seule lettre majuscule
+        String frtClepat = retenueFour.getFrtClepat();
+        if (frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
+            throw new IllegalArgumentException("frtClepat doit être une seule lettre majuscule.");
+        }
+
+        // Combiner frtMatcin formaté et frtClepat pour obtenir l'identifiant complet
+        String identifiant = frtMatcinFormatted + frtClepat;
+
+        // Vérifier que l'identifiant respecte le schéma \d{7}[A-Z]
+        if (!identifiant.matches("\\d{7}[A-Z]")) {
+            throw new IllegalArgumentException("L'identifiant ne respecte pas le format attendu: " + identifiant);
+        }
+
+        // Définir l'identifiant dans le déclarant
+        declarant.setIdentifiant(identifiant);
+
+        // Définir la catégorie du contribuable
+        declarant.setCategorieContribuable(TypeCategoriePersonne.fromValue(retenueFour.getFrtCateg()));
+
+        // Assigner le déclarant aux déclarations
         declarationsRS.setDeclarant(declarant);
 
         TypeReferenceDeclaration referenceDeclaration = new TypeReferenceDeclaration();
@@ -73,7 +115,7 @@ public class XMLGeneratorService {
         DeclarationsRS.AjouterCertificats ajouterCertificats = new DeclarationsRS.AjouterCertificats();
         List<TypeCertificat> certificatList = new ArrayList<>();
         TypeCertificat certificat = new TypeCertificat();
-        certificat.setBeneficiaire(createTypeTaxpayer());
+        certificat.setBeneficiaire(createTypeTaxpayer(retenueFour));
         certificat.setDatePayement("31/12/2023");
         certificat.setRefCertifChezDeclarant("CERT123456");
         certificat.setListeOperations(createListeOperations());
@@ -93,22 +135,37 @@ public class XMLGeneratorService {
         declarationsRS.setAnnulerCertificats(annulerCertificats);
     }
 
-    private TypeTaxpayer createTypeTaxpayer() {
+    private TypeTaxpayer createTypeTaxpayer(Retenue_four retenueFour) {
         TypeTaxpayer taxpayer = new TypeTaxpayer();
         TypeTaxpayer.IdTaxpayer idTaxpayer = new TypeTaxpayer.IdTaxpayer();
         TypeMatriculeFiscal matriculeFiscal = new TypeMatriculeFiscal();
-        matriculeFiscal.setTypeIdentifiant("1");
-        matriculeFiscal.setIdentifiant("1234567A");
-        matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.PM);
+        matriculeFiscal.setTypeIdentifiant(String.valueOf(retenueFour.getFrtTypIdent()));
+
+        // Formater correctement l'identifiant
+        Long frtMatcinLong = retenueFour.getFrtMatcin();
+        String frtMatcinFormatted = String.format("%07d", frtMatcinLong);
+        String frtClepat = retenueFour.getFrtClepat();
+        if (frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
+            throw new IllegalArgumentException("frtClepat doit être une seule lettre majuscule.");
+        }
+        String identifiant = frtMatcinFormatted + frtClepat;
+        if (!identifiant.matches("\\d{7}[A-Z]")) {
+            throw new IllegalArgumentException("L'identifiant ne respecte pas le format attendu: " + identifiant);
+        }
+
+        // Définir l'identifiant dans le matricule fiscal
+        matriculeFiscal.setIdentifiant(identifiant);
+
+        matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.fromValue(retenueFour.getFrtCateg()));
         idTaxpayer.setMatriculeFiscal(matriculeFiscal);
         taxpayer.setIdTaxpayer(idTaxpayer);
         taxpayer.setResident(BigInteger.ONE);
-        taxpayer.setNometprenonOuRaisonsociale("Example Company");
-        taxpayer.setAdresse("123 Example Street, Example City");
-        taxpayer.setActivite("Software Development");
+        taxpayer.setNometprenonOuRaisonsociale(retenueFour.getFrtRaisocial());
+        taxpayer.setAdresse(retenueFour.getFrtAdresse());
+        taxpayer.setActivite(retenueFour.getFrtActiv());
         TypeAdresseContact adresseContact = new TypeAdresseContact();
-        adresseContact.setAdresseMail("example@example.com");
-        adresseContact.setNumTel("123456789");
+        adresseContact.setAdresseMail("example@example.com"); // Ajoutez les champs réels si disponibles
+        adresseContact.setNumTel("123456789"); // Ajoutez les champs réels si disponibles
         taxpayer.setInfosContact(adresseContact);
         return taxpayer;
     }
@@ -202,5 +259,4 @@ public class XMLGeneratorService {
             return false;
         }
     }
-
 }
