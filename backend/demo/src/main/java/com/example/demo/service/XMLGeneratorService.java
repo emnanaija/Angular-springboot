@@ -55,15 +55,19 @@ public class XMLGeneratorService {
                 // Validate the generated XML
                 boolean isValid = validateXML(xmlContent);
                 if (!isValid) {
+                    System.out.println("Generated XML is not valid against the schema.");
                     return "Generated XML is not valid against the schema.";
                 }
 
-                return "Generated XML is valid against the schema.\n" + xmlContent;
+                System.out.println("Generated XML is valid against the schema.");
+                return xmlContent;
             } else {
+                System.out.println("Matricule not found");
                 return "Matricule not found";
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error generating XML");
             return "Error generating XML";
         }
     }
@@ -101,7 +105,8 @@ public class XMLGeneratorService {
         declarant.setIdentifiant(identifiant);
 
         // Définir la catégorie du contribuable
-        declarant.setCategorieContribuable(TypeCategoriePersonne.fromValue(retenueFour.getFrtCateg()));
+        String transformedCategory = transformCategory(retenueFour.getFrtCateg());
+        declarant.setCategorieContribuable(TypeCategoriePersonne.fromValue(transformedCategory));
 
         // Assigner le déclarant aux déclarations
         declarationsRS.setDeclarant(declarant);
@@ -156,7 +161,9 @@ public class XMLGeneratorService {
         // Définir l'identifiant dans le matricule fiscal
         matriculeFiscal.setIdentifiant(identifiant);
 
-        matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.fromValue(retenueFour.getFrtCateg()));
+        // Transformer la catégorie du contribuable
+        String transformedCategory = transformCategory(retenueFour.getFrtCateg());
+        matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.fromValue(transformedCategory));
         idTaxpayer.setMatriculeFiscal(matriculeFiscal);
         taxpayer.setIdTaxpayer(idTaxpayer);
         taxpayer.setResident(BigInteger.ONE);
@@ -168,6 +175,17 @@ public class XMLGeneratorService {
         adresseContact.setNumTel("123456789"); // Ajoutez les champs réels si disponibles
         taxpayer.setInfosContact(adresseContact);
         return taxpayer;
+    }
+
+    private String transformCategory(String category) {
+        switch (category) {
+            case "P":
+                return "PP";
+            case "M":
+                return "PM";
+            default:
+                throw new IllegalArgumentException("Catégorie inconnue : " + category);
+        }
     }
 
     private TypeCertificat.ListeOperations createListeOperations() {
