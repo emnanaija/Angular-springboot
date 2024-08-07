@@ -38,8 +38,8 @@ public class XMLGeneratorService {
 
             DeclarationsRS declarationsRS = new DeclarationsRS();
             declarationsRS.setVersionSchema("1.0");
-
             // Setting static values for declarant
+
             TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
             declarant.setTypeIdentifiant("1");
             declarant.setIdentifiant("1234567A");
