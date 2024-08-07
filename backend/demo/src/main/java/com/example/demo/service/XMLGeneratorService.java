@@ -23,8 +23,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class XMLGeneratorService {
@@ -34,37 +32,62 @@ public class XMLGeneratorService {
 
     private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
 
-    public String generateXML(Long frtMatcin, String frtClepat, Integer frtMois, Integer frtAnnee) {
+    public String generateXML() {
         try {
-            Optional<Retenue_four> retenueFourOptional = retenuFourRepository.findByFrtMatcinAndFrtClepatAndFrtMoisAndFrtAnnee(frtMatcin, frtClepat, frtMois, frtAnnee);
-            if (retenueFourOptional.isPresent()) {
-                Retenue_four retenueFour = retenueFourOptional.get();
+            List<Retenue_four> retenueFourList = retenuFourRepository.findAll();
 
-                DeclarationsRS declarationsRS = new DeclarationsRS();
-                fillDeclarationsRS(declarationsRS, retenueFour);
+            DeclarationsRS declarationsRS = new DeclarationsRS();
+            declarationsRS.setVersionSchema("1.0");
 
-                JAXBContext jaxbContext = JAXBContext.newInstance(DeclarationsRS.class);
-                Marshaller marshaller = jaxbContext.createMarshaller();
-                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            // Setting static values for declarant
+            TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
+            declarant.setTypeIdentifiant("1");
+            declarant.setIdentifiant("1234567A");
+            declarant.setCategorieContribuable(TypeCategoriePersonne.PM);
+            declarationsRS.setDeclarant(declarant);
 
-                StringWriter xmlWriter = new StringWriter();
-                marshaller.marshal(declarationsRS, xmlWriter);
+            // Setting static values for reference declaration
+            TypeReferenceDeclaration referenceDeclaration = new TypeReferenceDeclaration();
+            referenceDeclaration.setActeDepot("0");
+            referenceDeclaration.setAnneeDepot("2024");
+            referenceDeclaration.setMoisDepot("01");
+            declarationsRS.setReferenceDeclaration(referenceDeclaration);
 
-                String xmlContent = xmlWriter.toString();
+            DeclarationsRS.AjouterCertificats ajouterCertificats = new DeclarationsRS.AjouterCertificats();
+            List<TypeCertificat> certificatList = new ArrayList<>();
 
-                // Validate the generated XML
-                boolean isValid = validateXML(xmlContent);
-                if (!isValid) {
-                    System.out.println("Generated XML is not valid against the schema.");
-                    return "Generated XML is not valid against the schema.";
-                }
-
-                System.out.println("Generated XML is valid against the schema.");
-                return xmlContent;
-            } else {
-                System.out.println("Matricule not found");
-                return "Matricule not found";
+            for (Retenue_four retenueFour : retenueFourList) {
+                TypeCertificat certificat = new TypeCertificat();
+                certificat.setBeneficiaire(createTypeTaxpayer(retenueFour));
+                certificat.setDatePayement("31/12/2023");
+                certificat.setRefCertifChezDeclarant("CERT123456");
+                certificat.setListeOperations(createListeOperations());
+                certificat.setTotalPayement(createTotalPayement());
+                certificatList.add(certificat);
             }
+
+            ajouterCertificats.getCertificat().addAll(certificatList);
+            declarationsRS.setAjouterCertificats(ajouterCertificats);
+
+            JAXBContext jaxbContext = JAXBContext.newInstance(DeclarationsRS.class);
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            StringWriter xmlWriter = new StringWriter();
+            marshaller.marshal(declarationsRS, xmlWriter);
+
+            String xmlContent = xmlWriter.toString();
+
+            // Validate the generated XML
+            boolean isValid = validateXML(xmlContent);
+            if (!isValid) {
+                System.out.println("Generated XML is not valid against the schema.");
+                return "Generated XML is not valid against the schema.";
+            }
+
+            System.out.println("Generated XML is valid against the schema.");
+            return xmlContent;
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error generating XML");
@@ -72,88 +95,65 @@ public class XMLGeneratorService {
         }
     }
 
-    private void fillDeclarationsRS(DeclarationsRS declarationsRS, Retenue_four retenueFour) {
-        declarationsRS.setVersionSchema("1.0");
-
-        // Création d'une instance de TypeMatriculeFiscal
-        TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
-
-        // Définir le type d'identifiant
-        declarant.setTypeIdentifiant(String.valueOf(retenueFour.getFrtTypIdent()));
-
-        // Récupérer frtMatcin en tant que Long
-        Long frtMatcinLong = retenueFour.getFrtMatcin();
-
-        // Ajouter des zéros au début pour s'assurer qu'il a toujours 7 chiffres
-        String frtMatcinFormatted = String.format("%07d", frtMatcinLong);
-
-        // Vérifier que frtClepat est une seule lettre majuscule
-        String frtClepat = retenueFour.getFrtClepat();
-        if (frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
-            throw new IllegalArgumentException("frtClepat doit être une seule lettre majuscule.");
-        }
-
-        // Combiner frtMatcin formaté et frtClepat pour obtenir l'identifiant complet
-        String identifiant = frtMatcinFormatted + frtClepat;
-
-        // Vérifier que l'identifiant respecte le schéma \d{7}[A-Z]
-        if (!identifiant.matches("\\d{7}[A-Z]")) {
-            throw new IllegalArgumentException("L'identifiant ne respecte pas le format attendu: " + identifiant);
-        }
-
-        // Définir l'identifiant dans le déclarant
-        declarant.setIdentifiant(identifiant);
-
-        // Définir la catégorie du contribuable
-        String transformedCategory = transformCategory(retenueFour.getFrtCateg());
-        declarant.setCategorieContribuable(TypeCategoriePersonne.fromValue(transformedCategory));
-
-        // Assigner le déclarant aux déclarations
-        declarationsRS.setDeclarant(declarant);
-
-        TypeReferenceDeclaration referenceDeclaration = new TypeReferenceDeclaration();
-        referenceDeclaration.setActeDepot("0");
-        referenceDeclaration.setAnneeDepot("2024");
-        referenceDeclaration.setMoisDepot("01");
-        declarationsRS.setReferenceDeclaration(referenceDeclaration);
-
-        DeclarationsRS.AjouterCertificats ajouterCertificats = new DeclarationsRS.AjouterCertificats();
-        List<TypeCertificat> certificatList = new ArrayList<>();
-        TypeCertificat certificat = new TypeCertificat();
-        certificat.setBeneficiaire(createTypeTaxpayer(retenueFour));
-        certificat.setDatePayement("31/12/2023");
-        certificat.setRefCertifChezDeclarant("CERT123456");
-        certificat.setListeOperations(createListeOperations());
-        certificat.setTotalPayement(createTotalPayement());
-        certificatList.add(certificat);
-        ajouterCertificats.getCertificat().addAll(certificatList);
-        declarationsRS.setAjouterCertificats(ajouterCertificats);
-
-        DeclarationsRS.ModifierCertificats modifierCertificats = new DeclarationsRS.ModifierCertificats();
-        modifierCertificats.getCertificat().add(certificat);
-        declarationsRS.setModifierCertificats(modifierCertificats);
-
-        DeclarationsRS.AnnulerCertificats annulerCertificats = new DeclarationsRS.AnnulerCertificats();
-        TypeAnnulerCertificat annulerCertificat = new TypeAnnulerCertificat();
-        annulerCertificat.setRefCertifChezDeclarant("CERT123456");
-        annulerCertificats.getCertificat().add(annulerCertificat);
-        declarationsRS.setAnnulerCertificats(annulerCertificats);
-    }
-
     private TypeTaxpayer createTypeTaxpayer(Retenue_four retenueFour) {
         TypeTaxpayer taxpayer = new TypeTaxpayer();
         TypeTaxpayer.IdTaxpayer idTaxpayer = new TypeTaxpayer.IdTaxpayer();
+
+        String typeIdentifiant = String.valueOf(retenueFour.getFrtTypIdent());
+
+        switch (typeIdentifiant) {
+            case "1":
+                idTaxpayer.setMatriculeFiscal(createTypeMatriculeFiscal(retenueFour));
+                break;
+            case "2":
+                idTaxpayer.setCIN(createTypeCIN());
+                break;
+            case "3":
+                idTaxpayer.setPasseport(createTypePasseport());
+                break;
+            case "4":
+                idTaxpayer.setCarteSejour(createTypeCarteSejour());
+                break;
+            case "5":
+                idTaxpayer.setAutreIdentifiantFiscal(createTypeAutreIdentifiant());
+                break;
+            default:
+                throw new IllegalArgumentException("Type d'identifiant inconnu : " + typeIdentifiant);
+        }
+
+        taxpayer.setIdTaxpayer(idTaxpayer);
+        taxpayer.setResident(BigInteger.ONE);
+        taxpayer.setNometprenonOuRaisonsociale(retenueFour.getFrtRaisocial());
+        taxpayer.setAdresse("123 Example Street, Example City");
+        taxpayer.setActivite(retenueFour.getFrtActiv());
+
+        TypeAdresseContact adresseContact = new TypeAdresseContact();
+        adresseContact.setAdresseMail("example@example.com");
+        adresseContact.setNumTel("123456789");
+        taxpayer.setInfosContact(adresseContact);
+
+        return taxpayer;
+    }
+
+    private TypeMatriculeFiscal createTypeMatriculeFiscal(Retenue_four retenueFour) {
         TypeMatriculeFiscal matriculeFiscal = new TypeMatriculeFiscal();
-        matriculeFiscal.setTypeIdentifiant(String.valueOf(retenueFour.getFrtTypIdent()));
+
+        // Force the TypeIdentifiant to be '1' as per the schema constraint
+        matriculeFiscal.setTypeIdentifiant("1");
 
         // Formater correctement l'identifiant
+        String identifiant;
         Long frtMatcinLong = retenueFour.getFrtMatcin();
         String frtMatcinFormatted = String.format("%07d", frtMatcinLong);
         String frtClepat = retenueFour.getFrtClepat();
-        if (frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
-            throw new IllegalArgumentException("frtClepat doit être une seule lettre majuscule.");
+
+        // Ajouter une vérification et traitement pour frtClepat
+        if (frtClepat == null || frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
+            frtClepat = "A"; // Définir une valeur par défaut si frtClepat est invalide
+            System.out.println("frtClepat invalide. Utilisation de la valeur par défaut: " + frtClepat);
         }
-        String identifiant = frtMatcinFormatted + frtClepat;
+
+        identifiant = frtMatcinFormatted + frtClepat;
         if (!identifiant.matches("\\d{7}[A-Z]")) {
             throw new IllegalArgumentException("L'identifiant ne respecte pas le format attendu: " + identifiant);
         }
@@ -164,29 +164,72 @@ public class XMLGeneratorService {
         // Transformer la catégorie du contribuable
         String transformedCategory = transformCategory(retenueFour.getFrtCateg());
         matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.fromValue(transformedCategory));
-        idTaxpayer.setMatriculeFiscal(matriculeFiscal);
-        taxpayer.setIdTaxpayer(idTaxpayer);
-        taxpayer.setResident(BigInteger.ONE);
-        taxpayer.setNometprenonOuRaisonsociale(retenueFour.getFrtRaisocial());
-        taxpayer.setAdresse(retenueFour.getFrtAdresse());
-        taxpayer.setActivite(retenueFour.getFrtActiv());
-        TypeAdresseContact adresseContact = new TypeAdresseContact();
-        adresseContact.setAdresseMail("example@example.com"); // Ajoutez les champs réels si disponibles
-        adresseContact.setNumTel("123456789"); // Ajoutez les champs réels si disponibles
-        taxpayer.setInfosContact(adresseContact);
-        return taxpayer;
+
+        return matriculeFiscal;
     }
 
+    private TypeCIN createTypeCIN() {
+        TypeCIN cin = new TypeCIN();
+        cin.setTypeIdentifiant("2");
+        cin.setIdentifiant("12345678");
+        cin.setDateNaissance("01/01/1990");
+        cin.setCategorieContribuable(TypeCategoriePersonne.PP);
+        return cin;
+    }
+
+    private TypePasseport createTypePasseport() {
+        TypePasseport passeport = new TypePasseport();
+        passeport.setTypeIdentifiant("3");
+        passeport.setIdentifiant("P1234567");
+        passeport.setDateNaissance("01/01/1990");
+        passeport.setPays(TypeCodesPays.AD);
+        passeport.setCategorieContribuable(TypeCategoriePersonne.PP);
+        return passeport;
+    }
+
+    private TypeCarteSejour createTypeCarteSejour() {
+        TypeCarteSejour carteSejour = new TypeCarteSejour();
+        carteSejour.setTypeIdentifiant("4");
+        carteSejour.setIdentifiant("S1234567");
+        carteSejour.setDateNaissance("01/01/1990");
+        carteSejour.setPays(TypeCodesPays.AD);
+        carteSejour.setCategorieContribuable(TypeCategoriePersonne.PP);
+        return carteSejour;
+    }
+
+    private TypeAutreIdentifiant createTypeAutreIdentifiant() {
+        TypeAutreIdentifiant autreIdentifiant = new TypeAutreIdentifiant();
+        autreIdentifiant.setTypeIdentifiant("5");
+        autreIdentifiant.setIdentifiant("A1234567");
+        autreIdentifiant.setPays(TypeCodesPays.AD);
+        autreIdentifiant.setCategorieContribuable(TypeCategoriePersonne.PM);
+        return autreIdentifiant;
+    }
+
+
+
+
     private String transformCategory(String category) {
+        if (category == null) {
+            return "PM";
+        }
+
         switch (category) {
             case "P":
+            case "PP":
                 return "PP";
             case "M":
+            case "A":
+            case "PM":
+            case "N":
+            case "C":
                 return "PM";
             default:
                 throw new IllegalArgumentException("Catégorie inconnue : " + category);
         }
     }
+
+
 
     private TypeCertificat.ListeOperations createListeOperations() {
         TypeCertificat.ListeOperations listeOperations = new TypeCertificat.ListeOperations();
