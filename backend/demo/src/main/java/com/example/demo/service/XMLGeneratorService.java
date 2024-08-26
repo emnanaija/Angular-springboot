@@ -32,25 +32,29 @@ public class XMLGeneratorService {
 
     private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
 
-    public String generateXML() {
+    public String generateXML(String mois, String annee) {
         try {
-            List<Retenue_four> retenueFourList = retenuFourRepository.findAll();
+            // Convertir les paramètres en Integer
+            Integer frtMois = Integer.parseInt(mois);
+            Integer frtAnnee = Integer.parseInt(annee);
+            // Récupérer les données filtrées par mois et année depuis la base de données
+            List<Retenue_four> retenueFourList = retenuFourRepository.findByFrtMoisAndFrtAnnee(frtMois, frtAnnee);
 
             DeclarationsRS declarationsRS = new DeclarationsRS();
             declarationsRS.setVersionSchema("1.0");
-            // Setting static values for declarant
 
+            // Définir les valeurs pour le déclarant
             TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
             declarant.setTypeIdentifiant("1");
             declarant.setIdentifiant("1234567A");
             declarant.setCategorieContribuable(TypeCategoriePersonne.PM);
             declarationsRS.setDeclarant(declarant);
 
-            // Setting static values for reference declaration
+            // Définir les valeurs pour la référence de la déclaration
             TypeReferenceDeclaration referenceDeclaration = new TypeReferenceDeclaration();
             referenceDeclaration.setActeDepot("0");
-            referenceDeclaration.setAnneeDepot("2024");
-            referenceDeclaration.setMoisDepot("01");
+            referenceDeclaration.setAnneeDepot(annee);  // Utiliser le paramètre année
+            referenceDeclaration.setMoisDepot(mois);    // Utiliser le paramètre mois
             declarationsRS.setReferenceDeclaration(referenceDeclaration);
 
             DeclarationsRS.AjouterCertificats ajouterCertificats = new DeclarationsRS.AjouterCertificats();
@@ -59,7 +63,7 @@ public class XMLGeneratorService {
             for (Retenue_four retenueFour : retenueFourList) {
                 TypeCertificat certificat = new TypeCertificat();
                 certificat.setBeneficiaire(createTypeTaxpayer(retenueFour));
-                certificat.setDatePayement("31/12/2023");
+                certificat.setDatePayement("31/12/" + annee); // Utiliser l'année fournie
                 certificat.setRefCertifChezDeclarant("CERT123456");
                 certificat.setListeOperations(createListeOperations());
                 certificat.setTotalPayement(createTotalPayement());
@@ -78,7 +82,7 @@ public class XMLGeneratorService {
 
             String xmlContent = xmlWriter.toString();
 
-            // Validate the generated XML
+            // Valider le XML généré
             boolean isValid = validateXML(xmlContent);
             if (!isValid) {
                 System.out.println("Generated XML is not valid against the schema.");
@@ -137,19 +141,15 @@ public class XMLGeneratorService {
 
     private TypeMatriculeFiscal createTypeMatriculeFiscal(Retenue_four retenueFour) {
         TypeMatriculeFiscal matriculeFiscal = new TypeMatriculeFiscal();
-
-        // Force the TypeIdentifiant to be '1' as per the schema constraint
         matriculeFiscal.setTypeIdentifiant("1");
 
-        // Formater correctement l'identifiant
         String identifiant;
         Long frtMatcinLong = retenueFour.getFrtMatcin();
         String frtMatcinFormatted = String.format("%07d", frtMatcinLong);
         String frtClepat = retenueFour.getFrtClepat();
 
-        // Ajouter une vérification et traitement pour frtClepat
         if (frtClepat == null || frtClepat.length() != 1 || !Character.isUpperCase(frtClepat.charAt(0))) {
-            frtClepat = "A"; // Définir une valeur par défaut si frtClepat est invalide
+            frtClepat = "A"; // Valeur par défaut si frtClepat est invalide
             System.out.println("frtClepat invalide. Utilisation de la valeur par défaut: " + frtClepat);
         }
 
@@ -158,10 +158,7 @@ public class XMLGeneratorService {
             throw new IllegalArgumentException("L'identifiant ne respecte pas le format attendu: " + identifiant);
         }
 
-        // Définir l'identifiant dans le matricule fiscal
         matriculeFiscal.setIdentifiant(identifiant);
-
-        // Transformer la catégorie du contribuable
         String transformedCategory = transformCategory(retenueFour.getFrtCateg());
         matriculeFiscal.setCategorieContribuable(TypeCategoriePersonne.fromValue(transformedCategory));
 
@@ -206,9 +203,6 @@ public class XMLGeneratorService {
         return autreIdentifiant;
     }
 
-
-
-
     private String transformCategory(String category) {
         if (category == null) {
             return "PM";
@@ -229,13 +223,11 @@ public class XMLGeneratorService {
         }
     }
 
-
-
     private TypeCertificat.ListeOperations createListeOperations() {
         TypeCertificat.ListeOperations listeOperations = new TypeCertificat.ListeOperations();
         List<TypeOperation> operationList = new ArrayList<>();
         TypeOperation operation = new TypeOperation();
-        operation.setIdTypeOperation(TypeCodesOperations.RS_1_000001);  // Assurez-vous de définir une valeur valide
+        operation.setIdTypeOperation(TypeCodesOperations.RS_1_000001);
 
         operation.setAnneeFacturation("2023");
         operation.setCNPC(BigInteger.ONE);
@@ -289,9 +281,7 @@ public class XMLGeneratorService {
         totalPayement.setTotalTaxes(totalTaxes);
         totalPayement.setTotalMontantNetServi(BigInteger.valueOf(104000));
 
-        // Add TotalDevise
         totalPayement.setTotalDevise(createTotalDevise());
-
         return totalPayement;
     }
 

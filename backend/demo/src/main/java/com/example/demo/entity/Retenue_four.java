@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "RETENU_FOUR")
 @XmlRootElement(name = "retenue_four")
+@Access(AccessType.FIELD)  // Utiliser l'accès direct aux champs
+
 public class Retenue_four {
 
     @Id
