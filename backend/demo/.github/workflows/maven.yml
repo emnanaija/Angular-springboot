@@ -2,9 +2,13 @@ name: Java CI with Maven
 
 on:
   push:
+    paths:
+      - '**'
     branches:
       - main
   pull_request:
+    paths:
+      - '**'
     branches:
       - main
 
@@ -26,9 +30,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
       - name: Run XMLGeneratorServiceTest
-        run: mvn -B -f backend/demo/pom.xml -Dtest=XMLGeneratorServiceTest test
+        run: |
+          cd demo
+          mvn -B -Dtest=XMLGeneratorServiceTest test
