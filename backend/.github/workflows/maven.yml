@@ -33,10 +33,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Navigate to the demo directory
-      - name: Navigate to demo directory
-        run: cd demo
-
       # Run tests using Maven
       - name: Run XMLGeneratorServiceTest
-        run: mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
+        run: mvn -B -f demo/pom.xml -Dtest=XMLGeneratorServiceTest test
