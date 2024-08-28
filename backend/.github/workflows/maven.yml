@@ -32,4 +32,4 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run backend/demo/src/test/java/com/example/demo/XMLGeneratorServiceTest.java
-        run: mvn -B -f backend/demo/pom.xml -Dtest=XMLGeneratorServiceTest test
+        run: mvn -B -f demo/pom.xml -Dtest=XMLGeneratorServiceTest test
