@@ -5,8 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="860b3cdf-c95e-45ea-935b-0d72bfd23f6a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/META-INF/JAXB/episode_default.xjb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/META-INF/JAXB/episode_default_1.xjb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/demo/service/XMLGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/demo/service/XMLGeneratorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/DeclarationsRS.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/DeclarationsRS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/ObjectFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TaxeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TaxeType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TotalMntDeviseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TotalMntDeviseType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TotalMontantTaxeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TotalMontantTaxeType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeActeOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeActeOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAdresseContact.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAdresseContact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAnnulerCertificat.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAnnulerCertificat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAutreIdentifiant.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeAutreIdentifiant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCIN.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCIN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCarteSejour.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCarteSejour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCategoriePersonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCategoriePersonne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCertificat.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCertificat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodeDevise.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodeDevise.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodesOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodesOperations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodesPays.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeCodesPays.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeMatriculeFiscal.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeMatriculeFiscal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeMontantDevise.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeMontantDevise.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypePasseport.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypePasseport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeReferenceDeclaration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeReferenceDeclaration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeTaxpayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/generated/TypeTaxpayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/test/java/com/example/demo/DemoApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/test/java/com/example/demo/DemoApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +49,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -31,30 +67,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/chemseddine/Desktop/Tejbackend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/chemseddine/Desktop/versionemna/Angular-springboot&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.demo" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.DemoApplication">
+  <component name="RunManager" selected="JUnit.XMLGeneratorServiceTest (1)">
+    <configuration name="DemoApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.demo" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.DemoApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="XMLGeneratorServiceTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demo" />
       <extension name="coverage">
@@ -96,6 +150,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.XMLGeneratorServiceTest (1)" />
+        <item itemvalue="JUnit.DemoApplicationTests" />
         <item itemvalue="JUnit.XMLGeneratorServiceTest" />
       </list>
     </recent_temporary>
@@ -110,7 +165,10 @@
       <updated>1724680403253</updated>
       <workItem from="1724680404485" duration="985000" />
       <workItem from="1724681980212" duration="2048000" />
-      <workItem from="1724748526997" duration="710000" />
+      <workItem from="1724748526997" duration="1017000" />
+      <workItem from="1724832701885" duration="3766000" />
+      <workItem from="1724836522640" duration="234000" />
+      <workItem from="1724836772793" duration="1520000" />
     </task>
     <servers />
   </component>

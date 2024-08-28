@@ -32,29 +32,41 @@ public class XMLGeneratorService {
 
     private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
 
+
     public String generateXML(String mois, String annee) {
         try {
-            // Convertir les paramètres en Integer
+            System.out.println("Received mois: " + mois + ", annee: " + annee);
+
+            // Validate the input strings for month and year
+            if (!isNumeric(mois) || !isNumeric(annee)) {
+                System.out.println("Invalid input for month or year.");
+                return "Error generating XML due to invalid input";
+            }
+            System.out.println("Parsing mois and annee: " + mois + " and " + annee);
+
+            // Convert the parameters to Integer
             Integer frtMois = Integer.parseInt(mois);
             Integer frtAnnee = Integer.parseInt(annee);
-            // Récupérer les données filtrées par mois et année depuis la base de données
+
+            System.out.println("Parsed mois: " + frtMois + ", annee: " + frtAnnee);
+            // Retrieve filtered data by month and year from the database
             List<Retenue_four> retenueFourList = retenuFourRepository.findByFrtMoisAndFrtAnnee(frtMois, frtAnnee);
 
             DeclarationsRS declarationsRS = new DeclarationsRS();
             declarationsRS.setVersionSchema("1.0");
 
-            // Définir les valeurs pour le déclarant
+            // Define values for the declarant
             TypeMatriculeFiscal declarant = new TypeMatriculeFiscal();
             declarant.setTypeIdentifiant("1");
             declarant.setIdentifiant("1234567A");
             declarant.setCategorieContribuable(TypeCategoriePersonne.PM);
             declarationsRS.setDeclarant(declarant);
 
-            // Définir les valeurs pour la référence de la déclaration
+            // Define values for the reference declaration
             TypeReferenceDeclaration referenceDeclaration = new TypeReferenceDeclaration();
             referenceDeclaration.setActeDepot("0");
-            referenceDeclaration.setAnneeDepot(annee);  // Utiliser le paramètre année
-            referenceDeclaration.setMoisDepot(mois);    // Utiliser le paramètre mois
+            referenceDeclaration.setAnneeDepot(annee);  // Use the year parameter
+            referenceDeclaration.setMoisDepot(mois);    // Use the month parameter
             declarationsRS.setReferenceDeclaration(referenceDeclaration);
 
             DeclarationsRS.AjouterCertificats ajouterCertificats = new DeclarationsRS.AjouterCertificats();
@@ -63,7 +75,7 @@ public class XMLGeneratorService {
             for (Retenue_four retenueFour : retenueFourList) {
                 TypeCertificat certificat = new TypeCertificat();
                 certificat.setBeneficiaire(createTypeTaxpayer(retenueFour));
-                certificat.setDatePayement("31/12/" + annee); // Utiliser l'année fournie
+                certificat.setDatePayement("31/12/" + annee); // Use the provided year
                 certificat.setRefCertifChezDeclarant("CERT123456");
                 certificat.setListeOperations(createListeOperations());
                 certificat.setTotalPayement(createTotalPayement());
@@ -82,7 +94,7 @@ public class XMLGeneratorService {
 
             String xmlContent = xmlWriter.toString();
 
-            // Valider le XML généré
+            // Validate the generated XML
             boolean isValid = validateXML(xmlContent);
             if (!isValid) {
                 System.out.println("Generated XML is not valid against the schema.");
@@ -97,6 +109,19 @@ public class XMLGeneratorService {
             System.out.println("Error generating XML");
             return "Error generating XML";
         }
+    }
+
+    // Helper method to check if a string is numeric
+    private boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     private TypeTaxpayer createTypeTaxpayer(Retenue_four retenueFour) {
