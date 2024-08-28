@@ -31,6 +31,4 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run XMLGeneratorServiceTest
-        run: |
-          cd backend/demo
-          mvn -B -Dtest=XMLGeneratorServiceTest test
+        run: mvn -B -f backend/demo/pom.xml -Dtest=XMLGeneratorServiceTest test
