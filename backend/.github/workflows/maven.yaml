@@ -1,4 +1,4 @@
-name: Java CI
+name: Java CI with Maven
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'  # Utilisation d'OpenJDK par AdoptOpenJDK
+          distribution: 'temurin'
 
       - name: Cache Maven repository
         uses: actions/cache@v3
@@ -30,6 +30,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Navigate to backend directory
+        run: cd backend/demo
 
       - name: Run XMLGeneratorServiceTest
         run: mvn -B -Dtest=XMLGeneratorServiceTest test
