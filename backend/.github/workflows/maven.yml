@@ -31,8 +31,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Navigate to backend directory
-        run: cd backend/demo
-
       - name: Run XMLGeneratorServiceTest
-        run: mvn -B -Dtest=XMLGeneratorServiceTest test
+        run: mvn -B -f backend/demo/pom.xml -Dtest=XMLGeneratorServiceTest test
