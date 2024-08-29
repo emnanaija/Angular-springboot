@@ -44,4 +44,5 @@ jobs:
         run: |
           cd demo
           pwd
+          ls -la
           mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
