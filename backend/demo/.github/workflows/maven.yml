@@ -37,4 +37,5 @@ jobs:
       - name: Run XMLGeneratorServiceTest
         run: |
           cd demo
+          
           mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
