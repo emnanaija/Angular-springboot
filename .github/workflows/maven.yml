@@ -30,7 +30,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('demo/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('backend/demo/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
@@ -42,7 +42,7 @@ jobs:
 
       - name: Run XMLGeneratorServiceTest
         run: |
-          cd demo
+          cd backend/demo
           pwd
           ls -la
           mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
