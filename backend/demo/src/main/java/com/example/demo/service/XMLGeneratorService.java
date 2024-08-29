@@ -325,8 +325,10 @@ public class XMLGeneratorService {
 
     private boolean validateXML(String xmlContent) {
         try {
+            // Utiliser le ClassLoader pour obtenir le chemin absolu du fichier XSD
+            File schemaFile = new File(getClass().getClassLoader().getResource("xsd/TEJDeclarationRS_v1.0.xsd").getFile());
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File(XSD_PATH));
+            Schema schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new StringReader(xmlContent)));
             return true;
@@ -335,4 +337,5 @@ public class XMLGeneratorService {
             return false;
         }
     }
+
 }
