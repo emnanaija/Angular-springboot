@@ -34,5 +34,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Print Current Directory
+        run: pwd
+
+      - name: List Files in Current Directory
+        run: ls -la
+
       - name: Run XMLGeneratorServiceTest
-        run: mvn -B -f demo/pom.xml -Dtest=XMLGeneratorServiceTest test
+        run: |
+          cd demo
+          pwd
+          mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
