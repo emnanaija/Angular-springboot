@@ -34,8 +34,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Navigate to demo directory
+        working-directory: demo
+        run: echo "Moved to demo directory."
+
       - name: Run XMLGeneratorServiceTest
-        run: |
-          cd demo
-          
-          mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
+        working-directory: demo
+        run: mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
