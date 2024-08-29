@@ -36,6 +36,12 @@ jobs:
       - name: List Files in Current Directory
         run: ls -la
 
+      - name: Navigate to the demo directory
+        run: cd backend/demo
+
+      - name: List Files in demo Directory
+        run: ls -la
+
       - name: Run XMLGeneratorServiceTest
         run: |
           cd backend/demo
