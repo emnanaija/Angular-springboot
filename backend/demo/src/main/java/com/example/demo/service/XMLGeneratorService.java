@@ -30,7 +30,7 @@ public class XMLGeneratorService {
     @Autowired
     private RetenuFourRepository retenuFourRepository;
 
-    private static final String XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\stage3eme\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
+    private static final String XSD_PATH = "backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
 
 
     public String generateXML(String mois, String annee) {

@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="860b3cdf-c95e-45ea-935b-0d72bfd23f6a" name="Changes" comment="" />
+    <list default="true" id="860b3cdf-c95e-45ea-935b-0d72bfd23f6a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/demo/service/XMLGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/com/example/demo/service/XMLGeneratorService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/chemseddine/Desktop/versionemna/Angular-springboot",
+    "last_opened_file_path": "C:/Users/chemseddine/Desktop/versionemna/Angular-springboot/backend/demo/src/test/java/com/example/demo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,11 +63,14 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chemseddine\Desktop\versionemna\Angular-springboot\backend\demo\src\test\java\com\example\demo" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.demo" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.XMLGeneratorServiceTest (1)">
+  <component name="RunManager" selected="Spring Boot.DemoApplication">
     <configuration name="DemoApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demo" />
       <extension name="coverage">
@@ -141,7 +147,7 @@
       <workItem from="1724836522640" duration="234000" />
       <workItem from="1724836772793" duration="1881000" />
       <workItem from="1724923122541" duration="34000" />
-      <workItem from="1724923451354" duration="669000" />
+      <workItem from="1724923451354" duration="988000" />
     </task>
     <servers />
   </component>
