@@ -48,5 +48,6 @@ jobs:
       - name: Run Tests
         run: mvn -B -f backend/demo/pom.xml test
 
+
       - name: Verify the Generated Files
         run: ls -la backend/demo/target/
