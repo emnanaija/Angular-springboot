@@ -26,9 +26,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-v2
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Print Environment Variables
+        run: printenv
 
       - name: Print Current Directory
         run: pwd
@@ -47,7 +50,6 @@ jobs:
 
       - name: Run Tests
         run: mvn -B -f backend/demo/pom.xml test
-
 
       - name: Verify the Generated Files
         run: ls -la backend/demo/target/
