@@ -36,7 +36,7 @@ public class XMLGeneratorService {
     static {
         if (System.getenv("GITHUB_ACTIONS") != null) {
             // Chemin relatif pour GitHub Actions
-            XSD_PATH = "backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
+            XSD_PATH = Paths.get("backend", "demo", "src", "main", "resources", "xsd", "TEJDeclarationRS_v1.0.xsd").toString();
         } else {
             // Chemin absolu pour l'environnement local
             XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\versionemna\\Angular-springboot\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
