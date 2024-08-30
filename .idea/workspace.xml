@@ -50,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/chemseddine/Desktop/versionemna/Angular-springboot/backend/demo/src/test/java/com/example/demo",
+    "last_opened_file_path": "C:/Users/chemseddine/Desktop/versionemna/Angular-springboot/backend/demo/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,6 +69,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chemseddine\Desktop\versionemna\Angular-springboot\backend\demo\src" />
       <recent name="C:\Users\chemseddine\Desktop\versionemna\Angular-springboot\backend\demo\src\test\java\com\example\demo" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -152,7 +153,7 @@
       <workItem from="1724836522640" duration="234000" />
       <workItem from="1724836772793" duration="1881000" />
       <workItem from="1724923122541" duration="34000" />
-      <workItem from="1724923451354" duration="2899000" />
+      <workItem from="1724923451354" duration="4154000" />
     </task>
     <servers />
   </component>

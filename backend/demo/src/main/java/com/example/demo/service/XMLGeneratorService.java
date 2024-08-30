@@ -21,6 +21,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class XMLGeneratorService {
     @Autowired
     private RetenuFourRepository retenuFourRepository;
 
-    private static final String XSD_PATH = System.getProperty("user.dir") + "/backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
+    private static final String XSD_PATH = Paths.get("backend", "demo", "src", "main", "resources", "xsd", "TEJDeclarationRS_v1.0.xsd").toString();
 
 
     public String generateXML(String mois, String annee) {
