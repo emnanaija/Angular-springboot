@@ -31,8 +31,17 @@ public class XMLGeneratorService {
     @Autowired
     private RetenuFourRepository retenuFourRepository;
 
-    private static final String XSD_PATH = "backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
+    private static final String XSD_PATH;
 
+    static {
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            // Chemin relatif pour GitHub Actions
+            XSD_PATH = "backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
+        } else {
+            // Chemin absolu pour l'environnement local
+            XSD_PATH = "C:\\Users\\chemseddine\\Desktop\\versionemna\\Angular-springboot\\backend\\demo\\src\\main\\resources\\xsd\\TEJDeclarationRS_v1.0.xsd";
+        }
+    }
 
     public String generateXML(String mois, String annee) {
         try {
@@ -95,7 +104,6 @@ public class XMLGeneratorService {
 
             String xmlContent = xmlWriter.toString();
 
-            // Validate the generated XML
             boolean isValid = validateXML(xmlContent);
             if (!isValid) {
                 System.out.println("Generated XML is not valid against the schema.");
@@ -111,6 +119,7 @@ public class XMLGeneratorService {
             return "Error generating XML";
         }
     }
+
 
     // Helper method to check if a string is numeric
     private boolean isNumeric(String str) {
@@ -327,7 +336,6 @@ public class XMLGeneratorService {
     private boolean validateXML(String xmlContent) {
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            // Utilisez le chemin relatif ici
             File schemaFile = new File(XSD_PATH);
             if (!schemaFile.exists()) {
                 System.out.println("Schema file not found: " + schemaFile.getAbsolutePath());

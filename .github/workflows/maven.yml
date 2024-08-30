@@ -36,15 +36,17 @@ jobs:
       - name: List Files in Current Directory
         run: ls -la
 
-      - name: Navigate to the demo directory
-        run: cd backend/demo
-
-      - name: List Files in demo Directory
-        run: ls -la
+      - name: List Files in xsd Directory
+        run: ls -la backend/demo/src/main/resources/xsd/
 
       - name: Run XMLGeneratorServiceTest
-        run: |
-          cd backend/demo
-          pwd
-          ls -la
-          mvn -B -f pom.xml -Dtest=XMLGeneratorServiceTest test
+        run: mvn -B -f backend/demo/pom.xml -Dtest=XMLGeneratorServiceTest test
+
+      - name: Build Project with Maven
+        run: mvn -B -f backend/demo/pom.xml clean install
+
+      - name: Run Tests
+        run: mvn -B -f backend/demo/pom.xml test
+
+      - name: Verify the Generated Files
+        run: ls -la backend/demo/target/
