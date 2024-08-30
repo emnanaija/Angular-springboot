@@ -31,7 +31,7 @@ public class XMLGeneratorService {
     @Autowired
     private RetenuFourRepository retenuFourRepository;
 
-    private static final String XSD_PATH = Paths.get("backend", "demo", "src", "main", "resources", "xsd", "TEJDeclarationRS_v1.0.xsd").toString();
+    private static final String XSD_PATH = "backend/demo/src/main/resources/xsd/TEJDeclarationRS_v1.0.xsd";
 
 
     public String generateXML(String mois, String annee) {
@@ -327,7 +327,13 @@ public class XMLGeneratorService {
     private boolean validateXML(String xmlContent) {
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File(XSD_PATH));
+            // Utilisez le chemin relatif ici
+            File schemaFile = new File(XSD_PATH);
+            if (!schemaFile.exists()) {
+                System.out.println("Schema file not found: " + schemaFile.getAbsolutePath());
+                return false;
+            }
+            Schema schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new StringReader(xmlContent)));
             return true;
@@ -337,3 +343,4 @@ public class XMLGeneratorService {
         }
     }
 }
+
